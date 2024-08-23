@@ -1,5 +1,5 @@
 # Apparmor-OCI-hook-LFX prerequisite task
-The first step required is actually configuring the hooks definition location by editing the ```/etc/containers/containers.conf``` if its exists in you system or this ```/usr/share/containers/containers.conf``` file:
+The first step required is actually configuring the hooks definition location by editing the ```/etc/containers/containers.conf``` if it exists in you system or this ```/usr/share/containers/containers.conf``` file:
 ```
 [engine]
 hooks_dir = ["/etc/containers/oci/hooks.d"]
@@ -28,7 +28,7 @@ file,
 deny /etc/** wl,
 }
 ```
-Now create the hook binary oci-apparmor-hook in the path location mentioned in the hook definition JSON and update your apparmor profile name in the hook binary code in the variable ``` APPARMOR_PROFILE```
+Now create the hook binary oci-apparmor-hook in the path location mentioned in the hook definition JSON and update your apparmor profile name in the hook binary code in the variable ```APPARMOR_PROFILE``` and update the ```CONTAINERS_CONF_PATH``` ```to /etc/containers/containers.conf``` if it exists in you system or this ```/usr/share/containers/containers.conf``` exists by default
 ```
 #!/bin/bash
 echo "Running oci-apparmor-hook" >> /var/log/oci-apparmor-hook.log
