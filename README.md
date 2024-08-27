@@ -1,4 +1,4 @@
-# Apparmor-OCI-hook-LFX prerequisite task
+hu# Apparmor-OCI-hook-LFX prerequisite task
 The first step required is actually configuring the hooks definition location by editing the ```/etc/containers/containers.conf``` if it exists in you system or this ```/usr/share/containers/containers.conf``` file:
 ```
 [engine]
@@ -34,7 +34,8 @@ Now create the hook binary oci-apparmor-hook in the path location mentioned in t
 echo "Running oci-apparmor-hook" >> /var/log/oci-apparmor-hook.log
 
 CONTAINERS_CONF_PATH="/usr/share/containers/containers.conf"
-
+# Set the AppArmor profile to be used
+APPARMOR_PROFILE="test-profile-etc"
 if [ ! -f "$CONTAINERS_CONF_PATH" ]; then
     echo "Error: $CONTAINERS_CONF_PATH does not exist." >&2
     exit 1
@@ -48,8 +49,7 @@ fi
 
 CONTAINER_CONFIG=$(cat)
 
-# Set the AppArmor profile to be used
-APPARMOR_PROFILE="test-profile-etc"
+
 
 MODIFIED_CONFIG=$(echo "$CONTAINER_CONFIG" | jq --arg profile "$APPARMOR_PROFILE" '
     .process.apparmorProfile = $profile |
